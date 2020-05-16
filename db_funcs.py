@@ -36,3 +36,31 @@ my_client = connect_to_db(log, passwd, host, d_base)
 db = my_client.d_base
 
 
+def add_doc(collection, doc):
+    '''
+    Adds a document to the collection
+    
+    Args:
+    =====
+    collection: pymongo.database.Database class object
+    a coolection to work with
+    doc: dict class object
+    contains all the data to be added as a document
+    
+    Returns:
+    ========
+    None: None type
+    prints 'Added!'
+    '''
+    collection.insert_one(doc)
+    print('Added!')
+    
+
+# an example
+test_doc = {
+    'date':'2027-01-01',
+    'income': 0,
+    'expenses': -3000
+    }
+
+add_doc(test_db, test_doc)
