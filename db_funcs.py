@@ -1,42 +1,48 @@
 from pymongo import MongoClient
 
 
-def connect_to_db(log, passwd, host, d_base, port='27017'):
+def connect_to_db(conf):
     """
     Connects to a given DB and returns a DB object
     pymongo is required
     Args:
     =====
-    log: str
-    a db login
-
-    passwd: str
-    a db pass
-
-    server: str
-    a server's name
-
-    d_base: str
-    a db name
-    
-    port:str
-    by default - 27017, but can be adjusted
+    conf: dictionary
+    default values:
+            - login: ''
+            - password: ''
+            - host: 'localhost'
+            - port: 27017
+            - database = ''
     
 
     Returns:
     ========
-    client: pymongo.mongo_client.MongoClient class object
+    db: pymongo.database.Database class object
     a database client to work with
-    """
-    client = MongoClient(f"mongodb://{log}:{passwd}@{host}:{port}/{d_base}")
     
-    return(client)
+    or prints 'Connection failed!' if it can't reach the server
+    
+    """
+    
+    login = conf.get('login', '')
+    paswd = conf.get('paswd', '')
+    host = conf.get('host', 'localhost')
+    database = conf.get('database', '')
+    port = conf.get('port', '27017')
+    
+    
+    try:
+        mongoURI = f'mongodb://{login}:{paswd}@{host}:{port}/{database}'
+        client = MongoClient(mongoURI, connect=True)
+        return(client[database])
+    
+    except:
+        print('Connection failed!')
 
 # an example
 
-my_client = connect_to_db(log, passwd, host, d_base)
-
-db = my_client.d_base
+my_client = connect_to_db(my_config)
 
 
 def add_doc(collection, doc):
