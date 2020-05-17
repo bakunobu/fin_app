@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 
-def connect_to_db(log, passwd, host, d_base):
+def connect_to_db(log, passwd, host, d_base, port='27017'):
     """
     Connects to a given DB and returns a DB object
     pymongo is required
@@ -18,14 +18,17 @@ def connect_to_db(log, passwd, host, d_base):
 
     d_base: str
     a db name
-
+    
+    port:str
+    by default - 27017, but can be adjusted
+    
 
     Returns:
     ========
-    client: pymongo.database.MongoClient class object
+    client: pymongo.mongo_client.MongoClient class object
     a database client to work with
     """
-    client = MongoClient(f"mongodb://{log}:{passwd}@{host}/{d_base}")
+    client = MongoClient(f"mongodb://{log}:{passwd}@{host}:{port}/{d_base}")
     
     return(client)
 
