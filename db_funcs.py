@@ -76,10 +76,10 @@ test_doc = {
 add_doc(test_db, test_doc)
 
 
-def update_record(collection, filt, new_data):
+def update_doc(collection, filt, new_data):
     '''
     Updates a document using .find_one_and_update()
-    !!!needs import from bson library!!!
+    !!!needs an import from bson library!!!
     
     Args:
     =====
@@ -94,11 +94,9 @@ def update_record(collection, filt, new_data):
     ========
     None: None type
     Doesn't return anything
-    prints 'Document Updated!' if succeded,
-    or error warning if some errors occured.
-    '''
-       
+    prints 'Document Updated!' if succeded, or error warning if some errors occured.
     
+    '''
     check = collection.find_one(params)
     if check:
         try: 
@@ -114,4 +112,39 @@ def update_record(collection, filt, new_data):
 
 params =  {'_id': ObjectId("5ebbd583b40171c316ee330c")}
 new_data = {'income': 9999}
-update_record(collect, params, new_data)
+update_doc(collect, params, new_data)
+
+
+def delete_doc(collection, ID):
+    '''
+    Deletes a document from a collection
+    !!!needs an import from bson library!!!
+
+    
+    Args:
+    =====
+    collection: pymongo.collection.Collection class
+    a collection to work with
+    
+    ID: dict
+    a parameter or a set of parameters to find a required document
+    
+    Returns:
+    ========
+    None: None type
+    Doesn't return anything
+    prints 'Document Deleted!' if succeded, or 'No such document!'
+
+    '''
+    check = collection.find_one(ID)
+    
+    if check:
+        collection.delete_one(ID)
+        print('Document Deleted!')
+        
+    else:
+        print('No such document!')
+        
+#an example
+ID =  {'_id': ObjectId('5ebfd2ef9bd4fa344955c244')}
+delete_doc(collect, ID)
