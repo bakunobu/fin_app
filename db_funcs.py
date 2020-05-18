@@ -94,12 +94,21 @@ def update_record(collection, filt, new_data):
     ========
     None: None type
     Doesn't return anything
-    prints 'Document Updated!'
+    prints 'Document Updated!' if succeded,
+    or error warning if some errors occured.
     '''
-        collection.find_one_and_update(filt,
-                                       {'$set': new_data})
-        print('Document Updated!')
-        
+       
+    
+    check = collection.find_one(params)
+    if check:
+        try: 
+            collection.find_one_and_update(filt,
+                                      {'$set': new_data})
+            print('Document Updated!')
+        except:
+            print('Update fail!')
+    else:
+        print('No such document!')
 
 #an example
 
