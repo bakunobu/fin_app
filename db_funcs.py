@@ -220,3 +220,31 @@ def drop_col(my_db, col_name):
 
 #an example
 drop_col(db, 'new_collection')
+
+
+def create_df(collection):
+    '''
+    Converts the collection to a dataframe
+    
+    Args:
+    =====
+    collection: pymongo.collection.Collection
+    a collection to be converted
+    
+    Returns:
+    df: pandas.DataFrame
+    a dataframe (without '_id' column)
+    
+    '''
+    
+    try:
+        df = pd.DataFrame(collection.find())
+        df.drop(['_id'], axis=1, inplace=True)
+        return(df)
+
+    except:
+        print('Collection doesn\'t exist!')
+
+
+#an example
+df = create_df(db.my_col)
