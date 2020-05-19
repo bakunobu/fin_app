@@ -46,6 +46,41 @@ def connect_to_db(conf):
 my_client = connect_to_db(my_config)
 
 
+def create_new_col(my_db, col_name):
+    '''
+    Checks if the collection exists and creates new if not
+    
+    Args:
+    =====
+    my_db: pymongo.database.Database
+    a database to connect (the connection must be established before this function is being executed)
+    
+    col_name: str
+    a name for a new collection
+    
+    
+    Returns:
+    None: None type
+    Returns nothing
+    Prints ('Collection created!') if ok
+    OR 'Collection exists!' if not
+    '''
+    try:
+        name_list = my_db.list_collection_names()
+        if col_name in name_list:
+            print(f'A collection \'{col_name}\' already exists!')
+        else:
+            my_db.create_collection(col_name)
+            print(f'A collection \'{col_name}\' created!')
+            
+    except:
+        print('Wrong database name!')
+
+
+#an example
+create_new_col(db2, 'new_collection')
+
+
 def add_doc(collection, doc):
     '''
     Adds a document to the collection
