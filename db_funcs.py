@@ -78,7 +78,7 @@ def create_new_col(my_db, col_name):
 
 
 #an example
-create_new_col(db2, 'new_collection')
+create_new_col(db, 'new_collection')
 
 
 def add_doc(collection, doc):
@@ -183,3 +183,40 @@ def delete_doc(collection, ID):
 #an example
 ID =  {'_id': ObjectId('5ebfd2ef9bd4fa344955c244')}
 delete_doc(collect, ID)
+
+
+def drop_col(my_db, col_name):
+    '''
+    Checks if the collection exists and removes it
+    
+    Args:
+    =====
+    my_db: pymongo.database.Database
+    a database to connect (the connection must be established before this function is being executed)
+    
+    col_name: str
+    a name for a new collection
+    
+    
+    Returns:
+    None: None type
+    Returns nothing
+    Prints ('Collection deleted!') if ok
+    OR 'No such a collection!' if not
+    '''
+    try:
+        name_list = my_db.list_collection_names()
+        if col_name in name_list:
+            my_db.drop_collection(col_name)
+            print(f'A collection \'{col_name}\' deleted!')
+
+        else:
+            print(f'A collection \'{col_name}\' doesn\'t exist!')
+
+            
+    except:
+        print('Wrong database name!')
+
+
+#an example
+drop_col(db, 'new_collection')
