@@ -23,6 +23,8 @@ df = pd.DataFrame({
 # print(df)
 
 
+# creating a DF using iterative for loop
+
 for i in range(1, term + 1):
     interest = round(rate / 12 * balance, 2)
     principal = payment - interest
@@ -36,4 +38,28 @@ for i in range(1, term + 1):
 
 
 df = df.reset_index(drop=True)
-print(df[['month', 'payment', 'interest', 'principal', 'balance']])
+#print(df[['month', 'payment', 'interest', 'principal', 'balance']])
+
+# creating a DF using prebuild mode
+balance = loan
+index = list(range(term + 1))
+columns = ['month', 'payment', 'interest', 'principal', 'balance']
+df2 = pd.DataFrame(index=index, columns=columns)
+
+df2.iloc[0]['month'] = 0
+df2.iloc[0]['balance'] = balance
+
+
+for i in range(1, term + 1):
+    interest = round(rate / 12 * balance, 2)
+    principal = payment - interest
+    balance -= principal
+    
+    df2.iloc[i]['month'] = i
+    df2.iloc[i]['payment'] = payment
+    df2.iloc[i]['interest'] = interest
+    df2.iloc[i]['principal'] = principal
+    df2.iloc[i]['balance'] = balance
+
+
+print(df2[['month', 'payment', 'interest', 'principal', 'balance']])
