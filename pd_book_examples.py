@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import numpy_financial as nf
 
 
 loan = 3000
@@ -8,7 +9,7 @@ term = 14
 
 balance = loan
 
-payment = np.round(-np.pmt(rate / 12, term, loan), 2)
+payment = np.round(-nf.pmt(rate / 12, term, loan), 2)
 
 
 df = pd.DataFrame({
