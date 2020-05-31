@@ -62,4 +62,33 @@ for i in range(1, term + 1):
     df2.iloc[i]['balance'] = balance
 
 
-print(df2[['month', 'payment', 'interest', 'principal', 'balance']])
+#print(df2[['month', 'payment', 'interest', 'principal', 'balance']])
+
+
+# amort func
+def amort(loan, rate, term):
+    payment = np.round(-nf.pmt(rate / 12, term, loan), 2)
+    balance = loan
+    index = list(range(term + 1))
+    columns = ['month', 'payment', 'interest', 'principal', 'balance']
+    df = pd.DataFrame(index=index, columns=columns)
+    
+    df.iloc[0]['month'] = 0
+    df.iloc[0]['balance'] = balance
+    
+    for i in range(1, term + 1):
+        interest = round(rate / 12 * balance, 2)
+        principal = payment - interest
+        balance -= principal
+    
+        df.iloc[i]['month'] = i
+        df.iloc[i]['payment'] = payment
+        df.iloc[i]['interest'] = interest
+        df.iloc[i]['principal'] = principal
+        df.iloc[i]['balance'] = balance
+    
+    return(df)
+
+# testing
+bank_a = amort(loan, 0.0399, 20)
+print(bank_a)
