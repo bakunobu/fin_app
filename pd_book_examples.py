@@ -89,6 +89,39 @@ def amort(loan, rate, term):
     
     return(df)
 
+
+
+
 # testing
 bank_a = amort(loan, 0.0399, 20)
 print(bank_a)
+
+
+#  amort func 2
+def amort_cicle(loan, rate, term):
+    payment = np.round(-nf.pmt(rate / 12, term, loan), 2)
+    balance = loan
+    df = pd.DataFrame({'month': [0],
+                       'payment': [np.NaN],
+                       'interest': [np.NaN],
+                       'principal': [np.NaN],
+                       'balance': [balance]})
+    
+    
+    for i in range(1, term + 1):
+        interest = round(rate / 12 * balance, 2)
+        principal = payment - interest
+        balance -= principal
+    
+        df = df.append(pd.DataFrame({'month': [i],
+                                 'payment': [payment],
+                                 'interest': [interest],
+                                 'principal': [principal],
+                                 'balance': [balance]}))
+        
+    return(df)
+    
+
+#  testing
+bank_b= amort_cicle(loan, 0.0399, 20)
+print(bank_b)
