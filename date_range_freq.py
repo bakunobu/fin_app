@@ -152,12 +152,105 @@ def quiz_taker(num_opt, base_question, reminder):
             answer = input(f'please try [1-{num_opt}]\n(0 - return to the previous question):')
     return(answer)
 
-a = quiz_taker(2, 'Скажи-ка дядя, ведь недаром \n1. Нет \n2.Да', 'Выберите вариант')
+# testing
+# a = quiz_taker(2, 'Скажи-ка дядя, ведь недаром \n1. Нет \n2.Да', 'Выберите вариант')
 
 
 
 def freq_gen_logic():
-    print('''
-Эта программа позволяет настраивать частоту для периодов "Квартал" и "Год"
-Пожалуйста, выберите продолжительность
-          ''')
+    '''
+    Эта программа позволяет настраивать частоту для периодов "Квартал" и "Год"
+    Доступные опции:
+    - период (квартал или год);
+    - месяц окончания финансового года (январь-декабрь);
+    - наступление события (начало или конец периода);
+    - день окончания срока (рабочий или календарный.
+    
+    Args:
+    =====
+    No args are required: but you should be ready to type in info during four (or more) input sessions
+    
+    Returns:
+    ========
+    freq_tag: str
+    a generated (based on ones answers) frequency tag (acronyms are according to pandas manual)
+    see: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html
+    '''
+    a = 0
+    reminder = 'Пожалуйста выберите вариант с помощью клавиатуры'
+    while a < 4:
+        if a == 0:
+            question = 'Пожалуйста, укажите период:\n1. квартал\n2. год'
+            period = quiz_taker(2, question, reminder)
+            if period == 0:
+                a = 0
+            else:
+                a += 1
+        if a == 1:
+            question = """
+Пожалуйста, укажите месяц окончания финансового года:
+1. Январь;
+2. Февраль;
+3. Март;
+4. Апрель;
+5. Май;
+6. Июнь;
+7. Июль;
+8. Август;
+9. Сентябрь;
+10. Октябрь;
+11. Ноябрь;
+12. декабрь
+"""
+            year_ends = quiz_taker(12, question, reminder)
+            if year_ends == 0:
+                a -= 1
+            else:
+                a += 1
+        
+        if a == 2:
+            question = 'Осуществлять действие в начале или в конце периода:\n1.в начале\n2.в конце'
+            start_or_end = quiz_taker(2, question, reminder)
+            if start_or_end == 0:
+                a -= 1
+            elif start_or_end == 1:
+                a += 2
+                ends_in = 2
+            else:
+                a += 1
+        
+        if a == 3:
+            question = 'Укажите день окончания срока:\n1.рабочий\n2.календарный'
+            ends_in = quiz_taker(2, question, reminder)
+            if ends_in == 0:
+                a -= 1
+            else:
+                a += 1
+    periods = {1: 'Q',
+               2: 'A'}
+    
+    months = {1: 'JAN',
+              2: 'FEB',
+              3: 'MAR',
+              4: 'APR',
+              5: 'MAY',
+              6: 'JUN',
+              7: 'JUL',
+              8: 'AUG',
+              9: 'SEP',
+              10: 'OCT',
+              11: 'NOV',
+              12: 'DEC'}
+    
+    begins = {1: 'S',
+              2: ''}
+    
+    days = {1:'B',
+            2: ''}
+    
+    freq_tag = days[ends_in]+periods[period]+begins[start_or_end]+'-'+months[year_ends]
+    return(freq_tag)
+
+
+# testing
+print(freq_gen_logic())
