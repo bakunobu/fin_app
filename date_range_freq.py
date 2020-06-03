@@ -82,3 +82,39 @@ anchored_offsets_y = {'каждый год, год кончается в дек�
                       'каждый год, год кончается в сентябре': ' A-SEP',
                       'каждый год, год кончается в октябре': 'A-OCT',
                       'каждый год, год кончается в ноябре': 'A-NOV'}
+
+
+def freq_rus(phrase, dicts):
+    """
+    uses a set of abovementioned dicts to find translations
+    for freq parameters for pandas.date_range() method
+    
+    Args:
+    =====
+    phrase: str
+    a freq phrase in Russian
+    dicts: iterable
+    a list or a tuple with RUS-ENG translation
+    
+    Returns:
+    ========
+    freq_phrase: str
+    an freq indicator in ENG
+    
+    OR
+    ==
+    
+    None: None type
+    if there's no phrase in a dict
+    """
+    for my_dict in dicts:
+        if phrase.lower() in my_dict.keys():
+            return(my_dict[phrase.lower()])
+
+
+#  testing
+
+
+if freq_rus('Каждый год', [offset_aliases]):
+    print(freq_rus('Каждый год', [offset_aliases]))
+
