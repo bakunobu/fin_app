@@ -115,6 +115,49 @@ def freq_rus(phrase, dicts):
 #  testing
 
 
-if freq_rus('Каждый год', [offset_aliases]):
-    print(freq_rus('Каждый год', [offset_aliases]))
+#if freq_rus('Каждый год', [offset_aliases]):
+#    print(freq_rus('Каждый год', [offset_aliases]))
 
+
+def quiz_taker(num_opt, base_question, reminder):
+    '''
+    A simple function that prints a question, a reminder
+    (and a number of given options in [1-n] format) and checks if the answer is correct
+    
+    Args:
+    =====
+    num_opt: int
+    a number of options
+    
+    base_question: str
+    the main question
+    
+    reminder: str
+    a short reminder (options and defult step back option will be added automatically)
+    
+    Returns:
+    ========
+    answer: int
+    a number in a given interval
+    '''
+    print(base_question)
+    while True:
+        answer = input(f'{reminder} [1-{num_opt}]\n(0 - return to the previous question):')
+        try:
+            if int(answer) in range(0, num_opt+1):
+                answer = int(answer)
+                break
+        except:
+            print('Wrong input!')
+            answer = input(f'please try [1-{num_opt}]\n(0 - return to the previous question):')
+    return(answer)
+
+a = quiz_taker(2, 'Скажи-ка дядя, ведь недаром \n1. Нет \n2.Да', 'Выберите вариант')
+
+
+
+def freq_gen_logic():
+    print('''
+Эта программа позволяет настраивать частоту для периодов "Квартал" и "Год"
+Пожалуйста, выберите продолжительность
+          ''')
