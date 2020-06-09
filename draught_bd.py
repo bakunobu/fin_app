@@ -107,5 +107,55 @@ def return_last(my_collection):
 def sort_by_count(my_collection):
     most_common = my_collection.distinct('Цель')
     print(most_common[0])
-    
-sort_by_count(my_client.app_db.budget)
+   
+#  testing    
+#  sort_by_count(my_client.app_db.budget)
+
+
+def regular_spending(my_data, my_collection):
+        try:
+            my_collection.insert_one({'Назначение': my_data.get('Назначение', 'не указано'),
+                                    'Сумма': my_data.get('Сумма', 0),
+                                    'Цель': my_data.get('Цель', 'не указано'),
+                                    'Организация': my_data.get('Организация', 0),
+                                    'Период': my_data.get('Период', 'SM'),
+                                    'Дата': my_data.get('Дата', pd.Timestamp.now()),
+                                    'Комментарий': my_data.get('Комментарий', '')})
+            print('Расход на сумму {} рублей добавлен!'.format(my_data.get("Сумма", 0)))
+        except:
+            print('Ошибка! Попробуйте еще раз')
+
+
+def to_dict_reg_pay(record):
+    return({'Назначение': record[0],
+            'Сумма': record[1],
+            'Цель': record[2],
+            'Организация': record[3],
+            'Период': record[4],
+            'Дата': record[5],
+            'Комментарий': record[6]})
+
+
+def manual_per_input():
+    record = []
+    for _ in ('назначение',
+              'сумму',
+              'цель',
+              'организацию',
+              'период',
+              'дату',
+              'комментарий'):
+        if _ == 'сумму':
+            rec = question_math_check(f'укажите {_} платежа: ')
+        elif _ == 'комментарий':
+            rec = simple_question('Добавьте комментарий к платежу: ')
+        else:
+            rec = simple_question(f'укажите {_} платежа: ')
+        record.append(rec)
+    return(to_dict_reg_pay(record))
+
+
+my_rec = manual_per_input()
+
+
+regular_spending(my_rec, my_client.app_db.budget)
