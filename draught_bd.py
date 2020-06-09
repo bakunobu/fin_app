@@ -23,14 +23,7 @@ def single_purchase(my_data, my_collection):
         print('Ошибка! Попробуйте еще раз')
 """
 
-typical_spending = {'Назначение': 'Анализы',
-                    'Сумма': 360,
-                    'Цель': 'Медицина',
-                    'Организация': 'Медси',
-                    'Дата': pd.Timestamp.now(),
-                    'Комментарий': 'Анализ перед походом к врачу'}
-        
-
+    
 def single_purchase(my_data, my_collection):
     try:
         my_collection.insert_one({'Назначение': my_data.get('Назначение', 'не указано'),
@@ -45,4 +38,21 @@ def single_purchase(my_data, my_collection):
 
 
 # testing
-single_purchase(typical_spending, my_client.app_db.budget)
+# single_purchase(typical_spending, my_client.app_db.budget)
+
+def simple_question(text):
+    return(input(text))
+
+def question_math_check(text):
+    while True:
+        a = simple_question(text)
+        try:
+            return(float(a))
+            break
+        except:
+            print('Пожалуйста, введите число')
+
+print(question_math_check('Сколько сейчас градусов ниже нуля?'))
+
+# def manual_typein(my_collection):
+    
