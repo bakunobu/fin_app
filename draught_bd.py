@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import pymongo
 from pymongo import MongoClient
 
 
@@ -82,7 +83,20 @@ def manual_typein():
         record.append(rec)
     return(to_dict(record))
 
-my_rec = manual_typein()
-for k, v in my_rec.items():
-    print(k, v)
-    
+
+#  my_rec = manual_typein()
+#  testing
+#  for k, v in my_rec.items():
+#     print(k, v)
+
+# single_purchase(my_rec, my_client.app_db.budget)
+
+
+def return_last(my_collection):
+    return(my_collection.find().sort('Дата',
+                                     pymongo.DESCENDING).limit(3))
+
+test_queue = return_last(my_client.app_db.budget)
+
+for _ in test_queue:
+    print(_)
