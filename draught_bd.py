@@ -40,8 +40,10 @@ def single_purchase(my_data, my_collection):
 # testing
 # single_purchase(typical_spending, my_client.app_db.budget)
 
+
 def simple_question(text):
     return(input(text))
+
 
 def question_math_check(text):
     while True:
@@ -52,7 +54,35 @@ def question_math_check(text):
         except:
             print('Пожалуйста, введите число')
 
-print(question_math_check('Сколько сейчас градусов ниже нуля?'))
 
-# def manual_typein(my_collection):
+
+def to_dict(record):
+    return({'Назначение': record[0],
+            'Сумма': record[1],
+            'Цель': record[2],
+            'Организация': record[3],
+            'Дата': record[4],
+            'Комментарий': record[5]})
+    
+
+def manual_typein():
+    record = []
+    for _ in ('назначение',
+              'сумму',
+              'цель',
+              'организацию',
+              'дату',
+              'комментарий'):
+        if _ == 'сумму':
+            rec = question_math_check(f'укажите {_} платежа: ')
+        elif _ == 'комментарий':
+            rec = simple_question('Добавьте комментарий к платежу: ')
+        else:
+            rec = simple_question(f'укажите {_} платежа: ')
+        record.append(rec)
+    return(to_dict(record))
+
+my_rec = manual_typein()
+for k, v in my_rec.items():
+    print(k, v)
     
