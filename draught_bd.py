@@ -154,8 +154,13 @@ def manual_per_input():
         record.append(rec)
     return(to_dict_reg_pay(record))
 
+# testing
+#  my_rec = manual_per_input()
+#  regular_spending(my_rec, my_client.app_db.budget)
 
-my_rec = manual_per_input()
+start = pd.Timestamp('01-01-2020')
+end = pd.Timestamp.today()
 
-
-regular_spending(my_rec, my_client.app_db.budget)
+records = my_client.app_db.budget.find({'Дата': {'$lt': end, '$gte': start}})
+for record in records:
+    print(record)
