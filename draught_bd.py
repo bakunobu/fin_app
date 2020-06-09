@@ -93,10 +93,19 @@ def manual_typein():
 
 
 def return_last(my_collection):
-    return(my_collection.find().sort('Дата',
-                                     pymongo.DESCENDING).limit(3))
+    last_records = my_collection.find().sort('Дата',
+                                     pymongo.DESCENDING).limit(3)
+    for record in last_records:
+        print(record.get('Назначение', '-'),
+              record.get('Сумма', '-'),
+              record.get('Дата', '-'), sep=',')
 
-test_queue = return_last(my_client.app_db.budget)
+#  testing
+# return_last(my_client.app_db.budget)
 
-for _ in test_queue:
-    print(_)
+
+def sort_by_count(my_collection):
+    most_common = my_collection.distinct('Цель')
+    print(most_common[0])
+    
+sort_by_count(my_client.app_db.budget)
