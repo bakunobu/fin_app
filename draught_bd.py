@@ -346,10 +346,44 @@ def main():
         elif option == 2:
             print('Чаще всего вы тратили деньги на:', end=' ')
             sort_by_count(my_col)
-            print('Последние добавленные расходы')
+            print('Последние добавленные расходы:')
             return_last(my_col)
             print('This month\'s balance: updating' )
-                    
+        # search
+        elif option == 3:
+            
+            opt = quiz_taker(2,
+                       'Выберите тип поиска:\n1) По дате\n2) По содержанию',
+                       'Используйте цифры')
+            # return to the previos menu
+            if opt == 0:
+                continue
+            # search by date
+            elif opt == 1:
+                start = input('Задайте начальную дату (гггг-мм-дд): ')
+                end = input('Задайте конечную дату (гггг-мм-дд): ')
+                if end:
+                    results = find_in_interval(my_col, start, end)
+                else:
+                    results = find_in_interval(my_col, start)
+                if results:
+                    print('В указанном интервале найдены следующие записи:')
+                    for result in results:
+                        print(result)
+                else:
+                    print('Ничего не найдено')
+            # search by field
+            elif opt == 2:
+                field = input('Выберите поле')
+                value = input('Выберите значение')
+                results = simple_search(my_col, field, value)
+                if results:
+                    print('Найдены следующие записи:')
+                    for result in results:
+                        print(result)
+                else:
+                    print('Ничего не найдено')
+                
         
         else:
             print('Work in progress!')
