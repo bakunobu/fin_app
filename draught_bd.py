@@ -66,7 +66,7 @@ def to_dict(record):
             'Комментарий': record[5]})
     
 
-def manual_typein():
+def manual_input():
     record = []
     for _ in ('назначение',
               'сумму',
@@ -318,6 +318,24 @@ def main():
         if option == 6:
             print('Shutting down...\nBye!')
             break
+        
+        elif option == 0:
+            continue
+        
+        elif option == 1:
+            opt = quiz_taker(2,
+                       'Выберите характер платежа:\n1) Разовый\n2) Регулярный',
+                       'Используйте цифры')
+            if opt == 0:
+                continue
+            elif opt == 1:
+                single_purchase(manual_input(), my_col)
+                print('Information added')
+            elif opt == 2:
+                regular_spending(manual_per_input(), my_col)
+                print('Information added')
+                    
+        
         else:
             print('Work in progress!')
             break
