@@ -248,7 +248,32 @@ def delete_doc(collection, ID):
     else:
         print('No such document!')
         
-#an example
-ID =  {'Title': 'booze'}
-delete_doc(my_client.app_db.budget, ID)
+# testing
+# ID =  {'Title': 'booze'}
+# delete_doc(my_client.app_db.budget, ID)
+def show_menu():
+    print(
+        """
+Please choose an option:
+1) add document
+2) browse through Data Base
+3) find document
+4) edit document
+5) delete
+6) exit
+        """
+    )
 
+
+def main():
+    # set connection
+    my_client = MongoClient('mongodb://localhost:27017/')
+    my_col = my_client.app_db.budget
+    
+    # show main menu
+    show_menu()
+    while True:
+        print('Bye!')
+        break
+
+main()
