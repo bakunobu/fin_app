@@ -161,6 +161,14 @@ def manual_per_input():
 start = pd.Timestamp('01-01-2020')
 end = pd.Timestamp.today()
 
-records = my_client.app_db.budget.find({'Дата': {'$lt': end, '$gte': start}})
+#records = my_client.app_db.budget.find({'Дата': {'$lt': end, '$gte': start}})
+
+    
+
+def find_in_interval(my_collection, start, end=pd.Timestamp.now()):
+    return(my_collection.find({'Дата': {'$lt': end, '$gte': start}}))
+
+
+records = find_in_interval(my_client.app_db.budget, start, end)
 for record in records:
     print(record)
