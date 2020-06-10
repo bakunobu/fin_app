@@ -205,7 +205,7 @@ def update_doc(collection, filt, new_data):
     prints 'Document Updated!' if succeded, or error warning if some errors occured.
     
     '''
-    check = collection.find_one(params)
+    check = collection.find_one(filt)
     if check:
         try: 
             collection.find_one_and_update(filt,
@@ -374,8 +374,8 @@ def main():
                     print('Ничего не найдено')
             # search by field
             elif opt == 2:
-                field = input('Выберите поле')
-                value = input('Выберите значение')
+                field = input('Выберите поле: ')
+                value = input('Выберите значение: ')
                 results = simple_search(my_col, field, value)
                 if results:
                     print('Найдены следующие записи:')
@@ -383,7 +383,16 @@ def main():
                         print(result)
                 else:
                     print('Ничего не найдено')
-                
+        
+        elif option == 4:
+            field = input('Выберите поле: ')
+            value = input('Выберите значение: ')
+            upd_field = input('Выберите поле для изменения: ')
+            new_value = input('Ввведите новое значение: ')
+            update_doc(my_col,
+                       {field: value},
+                       {upd_field, new_value})
+            print('Обновлено')
         
         else:
             print('Work in progress!')
