@@ -216,8 +216,39 @@ def update_doc(collection, filt, new_data):
     else:
         print('No such document!')
 
-#an example
+# testing
 
-params =  {'Title': 'booze'}
-new_data = {'Ammount': 199}
-update_doc(my_client.app_db.budget, params, new_data)
+def delete_doc(collection, ID):
+    '''
+    Deletes a document from a collection
+    !!!needs an import from bson library!!!
+
+    
+    Args:
+    =====
+    collection: pymongo.collection.Collection class
+    a collection to work with
+    
+    ID: dict
+    a parameter or a set of parameters to find a required document
+    
+    Returns:
+    ========
+    None: None type
+    Doesn't return anything
+    prints 'Document Deleted!' if succeded, or 'No such document!'
+
+    '''
+    check = collection.find_one(ID)
+    
+    if check:
+        collection.delete_one(ID)
+        print('Document Deleted!')
+        
+    else:
+        print('No such document!')
+        
+#an example
+ID =  {'Title': 'booze'}
+delete_doc(my_client.app_db.budget, ID)
+
