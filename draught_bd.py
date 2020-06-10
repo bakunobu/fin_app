@@ -168,7 +168,15 @@ end = pd.Timestamp.today()
 def find_in_interval(my_collection, start, end=pd.Timestamp.now()):
     return(my_collection.find({'Дата': {'$lt': end, '$gte': start}}))
 
+# testing 
+# records = find_in_interval(my_client.app_db.budget, start, end)
+# for record in records:
+#    print(record)
 
-records = find_in_interval(my_client.app_db.budget, start, end)
-for record in records:
-    print(record)
+
+def simple_search(my_collection, field, value):
+    return(my_collection.find_all({field: value}))
+
+results = simple_search(my_client.app_db.budget, 'Цель', 'подписки')
+for result in results:
+    print(result)
