@@ -314,7 +314,12 @@ def main():
     # show main menu
     show_menu()
     while True:
-        print('Bye!')
-        break
+        option = quiz_taker(6, 'Укажите пункт меню', 'Выберите вариант с помощью клавиатуры')
+        if option == 6:
+            print('Shutting down...\nBye!')
+            break
+        else:
+            print('Work in progress!')
+            break
 
 main()
