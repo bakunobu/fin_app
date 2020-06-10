@@ -315,25 +315,40 @@ def main():
     show_menu()
     while True:
         option = quiz_taker(6, 'Укажите пункт меню', 'Выберите вариант с помощью клавиатуры')
+        
+        # exiting option
         if option == 6:
             print('Shutting down...\nBye!')
             break
         
+        # do nothing (repeat) option
         elif option == 0:
             continue
         
+        # adding new data option
         elif option == 1:
+            
             opt = quiz_taker(2,
                        'Выберите характер платежа:\n1) Разовый\n2) Регулярный',
                        'Используйте цифры')
+            # return to the previos menu
             if opt == 0:
                 continue
+            # add single spending
             elif opt == 1:
                 single_purchase(manual_input(), my_col)
                 print('Information added')
+            # add regular spending
             elif opt == 2:
                 regular_spending(manual_per_input(), my_col)
                 print('Information added')
+        # browsing through database
+        elif option == 2:
+            print('Чаще всего вы тратили деньги на:', end=' ')
+            sort_by_count(my_col)
+            print('Последние добавленные расходы')
+            return_last(my_col)
+            print('This month\'s balance: updating' )
                     
         
         else:
