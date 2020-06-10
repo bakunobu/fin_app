@@ -251,6 +251,8 @@ def delete_doc(collection, ID):
 # testing
 # ID =  {'Title': 'booze'}
 # delete_doc(my_client.app_db.budget, ID)
+
+
 def show_menu():
     print(
         """
@@ -263,6 +265,45 @@ Please choose an option:
 6) exit
         """
     )
+
+
+def quiz_taker(num_opt, base_question, reminder):
+    '''
+    A simple function that prints a question, a reminder
+    (and a number of given options in [1-n] format) and checks if the answer is correct
+    
+    Args:
+    =====
+    num_opt: int
+    a number of options
+    
+    base_question: str
+    the main question
+    
+    reminder: str
+    a short reminder (options and defult step back option will be added automatically)
+    
+    Returns:
+    ========
+    answer: int
+    a number in a given interval
+    '''
+    print(base_question)
+    while True:
+        answer = input(f'{reminder} [1-{num_opt}]\n(0 - return to the previous question):')
+        try:
+            if int(answer) in range(0, num_opt+1):
+                answer = int(answer)
+                break
+        except:
+            print('Wrong input!')
+            answer = input(f'please try [1-{num_opt}]\n(0 - return to the previous question):')
+    return(answer)
+
+# testing
+# a = quiz_taker(2, 'Скажи-ка дядя, ведь недаром \n1. Нет \n2.Да', 'Выберите вариант')
+
+
 
 
 def main():
