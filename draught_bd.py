@@ -175,8 +175,49 @@ def find_in_interval(my_collection, start, end=pd.Timestamp.now()):
 
 
 def simple_search(my_collection, field, value):
-    return(my_collection.find_all({field: value}))
+    return(my_collection.find({field: value}))
 
-results = simple_search(my_client.app_db.budget, 'Цель', 'подписки')
-for result in results:
-    print(result)
+
+# testing
+# results = simple_search(my_client.app_db.budget, 'цель', 'подписки')
+# for result in results:
+#    print(result)
+
+
+def update_doc(collection, filt, new_data):
+    '''
+    Updates a document using .find_one_and_update()
+    !!!needs an import from bson library!!!
+    
+    Args:
+    =====
+    collection: pymongo.collection.Collection class
+    a collection to work with
+    filter: dict
+    a parameter or a set of parameters to find a required document
+    new_data: dict
+    a new data to update a document with
+    
+    Returns:
+    ========
+    None: None type
+    Doesn't return anything
+    prints 'Document Updated!' if succeded, or error warning if some errors occured.
+    
+    '''
+    check = collection.find_one(params)
+    if check:
+        try: 
+            collection.find_one_and_update(filt,
+                                      {'$set': new_data})
+            print('Document Updated!')
+        except:
+            print('Update fail!')
+    else:
+        print('No such document!')
+
+#an example
+
+params =  {'Title': 'booze'}
+new_data = {'Ammount': 199}
+update_doc(my_client.app_db.budget, params, new_data)
