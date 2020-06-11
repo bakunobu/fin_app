@@ -318,12 +318,21 @@ def main():
     my_col = my_client.app_db.budget
     
     # show main menu
-    show_menu()
+    menu_text ="""
+    Please choose an option:
+    1) add document
+    2) browse through Data Base
+    3) reports
+    4) find document
+    5) edit document
+    6) delete
+    7) exit
+        """
     while True:
-        option = quiz_taker(6, 'Укажите пункт меню', 'Выберите вариант с помощью клавиатуры')
+        option = quiz_taker(7, menu_text, 'Выберите вариант с помощью клавиатуры')
         
         # exiting option
-        if option == 6:
+        if option == 7:
             print('Shutting down...\nBye!')
             break
         
@@ -355,8 +364,12 @@ def main():
             print('Последние добавленные расходы:')
             return_last(my_col)
             print('This month\'s balance: updating' )
-        # search
+        # reports
         elif option == 3:
+            print('Will be here soon')
+        
+        # search
+        elif option == 4:
             
             opt = quiz_taker(2,
                        'Выберите тип поиска:\n1) По дате\n2) По содержанию',
@@ -390,7 +403,7 @@ def main():
                 else:
                     print('Ничего не найдено')
         # edit document
-        elif option == 4:
+        elif option == 5:
             field = input('Выберите поле: ')
             value = input('Выберите значение: ')
             upd_field = input('Выберите поле для изменения: ')
@@ -400,7 +413,7 @@ def main():
                        {upd_field, new_value})
             print('Обновлено')
         # delete document
-        elif option == 5:
+        elif option == 6:
             field = input('Выберите поле: ')
             value = input('Выберите значение: ')
             result = get_id({field: value}, my_col)
