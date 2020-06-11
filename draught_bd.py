@@ -219,7 +219,7 @@ def update_doc(collection, filt, new_data):
 
 # testing
 
-def delete_doc(collection, ID):
+def delete_doc(ID, collection):
     '''
     Deletes a document from a collection
     !!!needs an import from bson library!!!
@@ -405,7 +405,7 @@ def main():
             value = input('Выберите значение: ')
             result = get_id({field: value}, my_col)
             ID =  {'_id': ObjectId(result.get('_id', 'wow'))}
-            delete_doc(my_col, ID)
+            delete_doc(ID, my_col)
         
         
 main()
