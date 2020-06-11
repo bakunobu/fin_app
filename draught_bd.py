@@ -268,6 +268,11 @@ Please choose an option:
     )
 
 
+def get_id(params, my_col):
+    document = my_col.find_one(params)
+    return(document)
+
+
 def quiz_taker(num_opt, base_question, reminder):
     '''
     A simple function that prints a question, a reminder
@@ -396,11 +401,11 @@ def main():
             print('Обновлено')
         # delete document
         elif option == 5:
-            pass
+            field = input('Выберите поле: ')
+            value = input('Выберите значение: ')
+            result = get_id({field: value}, my_col)
+            ID =  {'_id': ObjectId(result.get('_id', 'wow'))}
+            delete_doc(my_col, ID)
         
         
-        else:
-            print('Work in progress!')
-            break
-
 main()
