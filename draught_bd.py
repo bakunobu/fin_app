@@ -63,7 +63,7 @@ def to_dict(record):
             'Сумма': record[1],
             'Цель': record[2],
             'Организация': record[3],
-            'Дата': record[4],
+            'Дата': pd.Timestamp(record[4]),
             'Комментарий': record[5]})
     
 
@@ -133,7 +133,7 @@ def to_dict_reg_pay(record):
             'Цель': record[2],
             'Организация': record[3],
             'Период': record[4],
-            'Дата': record[5],
+            'Дата': pd.Timestamp(record[5]),
             'Комментарий': record[6]})
 
 
@@ -159,7 +159,7 @@ def manual_per_input():
 #  my_rec = manual_per_input()
 #  regular_spending(my_rec, my_client.app_db.budget)
 
-start = pd.Timestamp('01-01-2020')
+start = pd.Timestamp(2020, 1, 1)
 end = pd.Timestamp.today()
 
 #records = my_client.app_db.budget.find({'Дата': {'$lt': end, '$gte': start}})
