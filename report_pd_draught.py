@@ -22,4 +22,7 @@ mortgage = pd.DataFrame(
     index=pd.date_range(start=TODAY, end=END, freq='M') + datetime.timedelta(days=15)
 )
 
-print(mortgage.head())
+calendar = pd.concat([calendar, income], axis=1).fillna(0)
+calendar = pd.concat([calendar, mortgage], axis=1).fillna(0)
+
+print(calendar.tail(10))
