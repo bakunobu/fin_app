@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import pymongo
 from pymongo import MongoClient
+from bson import ObjectId
 
 
 my_client = MongoClient('mongodb://localhost:27017/')
@@ -383,7 +384,7 @@ def main():
                         print(result)
                 else:
                     print('Ничего не найдено')
-        
+        # edit document
         elif option == 4:
             field = input('Выберите поле: ')
             value = input('Выберите значение: ')
@@ -393,6 +394,10 @@ def main():
                        {field: value},
                        {upd_field, new_value})
             print('Обновлено')
+        # delete document
+        elif option == 5:
+            pass
+        
         
         else:
             print('Work in progress!')
