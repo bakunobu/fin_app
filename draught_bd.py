@@ -408,9 +408,12 @@ def main():
             value = input('Выберите значение: ')
             upd_field = input('Выберите поле для изменения: ')
             new_value = input('Ввведите новое значение: ')
+            if upd_field == 'Дата':
+                new_value = pd.Timestamp(new_value)
+                
             update_doc(my_col,
                        {field: value},
-                       {upd_field, new_value})
+                       {upd_field: new_value})
             print('Обновлено')
         # delete document
         elif option == 6:
