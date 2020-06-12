@@ -48,3 +48,11 @@ def update_totals(df):
     df['cum_total'] = df['total'].cumsum()
     
     return(df)
+
+
+def plot_budget(df):
+    plt.figure(figsize=(10, 5))
+    plt.plot(df.index, df.total, label='Daily Total')
+    plt.plot(df.index, df.cum_total, label='Cumulative Total')
+    plt.legend()
+    plt.show()
