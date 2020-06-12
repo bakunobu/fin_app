@@ -30,8 +30,21 @@ calendar = pd.concat([calendar, mortgage], axis=1).fillna(0)
 calendar['total'] = calendar.sum(axis=1)
 calendar['cum_total'] = calendar['total'].cumsum()
 
+
+"""
 plt.figure(figsize=(10, 5))
 plt.plot(calendar.index, calendar.total, label='Daily Total')
 plt.plot(calendar.index, calendar.cum_total, label = 'Cumulative Total')
 plt.legend()
 plt.show()
+"""
+
+def update_totals(df):
+    
+    if df.columns.isin(['total', 'cum_total']).any():
+        df['total'] = 0
+        df['cum_total'] = 0
+    df['total'] = df.sum(axis=1)
+    df['cum_total'] = df['total'].cumsum()
+    
+    return(df)
