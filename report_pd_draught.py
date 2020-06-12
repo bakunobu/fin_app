@@ -25,4 +25,8 @@ mortgage = pd.DataFrame(
 calendar = pd.concat([calendar, income], axis=1).fillna(0)
 calendar = pd.concat([calendar, mortgage], axis=1).fillna(0)
 
+
+calendar['total'] = calendar.sum(axis=1)
+calendar['cum_total'] = calendar['total'].cumsum()
+
 print(calendar.tail(10))
