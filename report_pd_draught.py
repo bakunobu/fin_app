@@ -4,6 +4,7 @@ import numpy as np
 import pymongo
 from pymongo import MongoClient
 from bson import ObjectId
+import matplotlib.pyplot as plt
 
 
 TODAY = pd.Timestamp(2020, 6, 11)
@@ -29,4 +30,8 @@ calendar = pd.concat([calendar, mortgage], axis=1).fillna(0)
 calendar['total'] = calendar.sum(axis=1)
 calendar['cum_total'] = calendar['total'].cumsum()
 
-print(calendar.tail(10))
+plt.figure(figsize=(10, 5))
+plt.plot(calendar.index, calendar.total, label='Daily Total')
+plt.plot(calendar.index, calendar.cum_total, label = 'Cumulative Total')
+plt.legend()
+plt.show()
