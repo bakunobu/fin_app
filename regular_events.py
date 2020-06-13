@@ -28,5 +28,17 @@ record = {'Description': 'A New Years\'s test spending',
           'comments': 'just testing'}
 
 
-
 # create a new DB with a new collection (with a single document)
+def initiate_collection(record=record):
+    '''
+    testing inititating func (reating a DB and a collection)
+    '''
+    my_client = test_connection()
+    my_db = my_client['spending_DB']
+    my_col = my_db['single_purch']
+    record_id = my_col.insert_one(record).inserted_id
+    print(record_id)
+
+# testing
+
+initiate_collection()
