@@ -17,7 +17,15 @@ def test_connection():
 
 
 # create the first test score to start a new collection
+date = pd.Timestamp(2020, 1, 1).normalize()
 
+record = {'Description': 'A New Years\'s test spending',
+          'Amount': 100.0,
+          'Date': date,
+          'Tags': ['testing', 'gifts'],
+          'Regular': 'NO',
+          'Source': 'cash',
+          'comments': 'just testing'}
 
 
 
