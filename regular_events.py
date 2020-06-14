@@ -194,3 +194,11 @@ reg_records = [{'Description': 'salary',
                 'Shift': 90,
                 'Source': 'bank acc.',
                 'comments': 'just testing'}]
+
+
+# testing
+my_client = test_connection()
+my_db = my_client['spending_DB']
+my_col = my_db['reg_spend']
+result = my_col.insert_many(reg_records)
+result.inserted_ids
