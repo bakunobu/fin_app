@@ -1,8 +1,11 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
+import pprint
 import pymongo
-from pymongo import MongoClient
 from bson import ObjectId
+from pymongo import MongoClient
+
+
 
 
 # connect to DB
@@ -197,8 +200,39 @@ reg_records = [{'Description': 'salary',
 
 
 # testing
+'''
 my_client = test_connection()
 my_db = my_client['spending_DB']
 my_col = my_db['reg_spend']
-result = my_col.insert_many(reg_records)
-result.inserted_ids
+my_col.insert_many(reg_records)
+'''
+
+# adding spending manually
+
+my_client = test_connection()
+my_db = my_client['spending_DB']
+my_col = my_db['reg_spend']
+
+
+TODAY = pd.Timestamp(2020, 1, 2).normalize()
+'''
+for record in my_col.find({'ENDS': {'$gte': TODAY}}):
+    pprint.pprint(record)
+'''
+
+my_col.insert_one({'Description': 'test',
+                'Amount': -4000.0,
+                'Date': pd.Timestamp(2020, 1, 1).normalize(),
+                'Tags': ['testing', 'test'],
+                'Regular': 'YES',
+                'Starts': pd.Timestamp(2020, 1, 1).normalize(),
+                'ENDS': pd.Timestamp(2020, 1, 12).normalize(),
+                'Period': 'M',
+                'Shift': 12,
+                'Source': 'cash',
+                'comments': 'just testing'})
+
+CHECK_DATE = pd.Timestamp(2020, 1, 15).normalize()
+for record in my_col.find({'ENDS': {'$lt': CHECK_DATE}}):
+    pprint.pprint(record)
+    my_col.delete_one(record)
