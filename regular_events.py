@@ -1,11 +1,10 @@
+import datetime
 import numpy as np
 import pandas as pd
 import pprint
 import pymongo
 from bson import ObjectId
 from pymongo import MongoClient
-
-
 
 
 # connect to DB
@@ -213,8 +212,8 @@ my_client = test_connection()
 my_db = my_client['spending_DB']
 my_col = my_db['reg_spend']
 
-
-TODAY = pd.Timestamp(2020, 1, 2).normalize()
+# search for outdated documents
+TODAY = pd.Timestamp(2020, 1, 13).normalize()
 '''
 for record in my_col.find({'ENDS': {'$gte': TODAY}}):
     pprint.pprint(record)
@@ -233,8 +232,7 @@ my_col.insert_one({'Description': 'test',
                 'comments': 'just testing'})
 
 
-
-CHECK_DATE = pd.Timestamp(2020, 1, 15).normalize()
+CHECK_DATE = pd.Timestamp(2020, 2, 12).normalize()
 
 def del_outdated(my_col, CHECK_DATE):
     '''
@@ -260,3 +258,20 @@ def del_outdated(my_col, CHECK_DATE):
     for record in my_col.find({'ENDS': {'$lt': CHECK_DATE}}):
         pprint.pprint(record)
         my_col.delete_one(record)
+
+spending_col = my_db['single_purch']
+
+# generate data sequence
+for record in my_col.find():
+    paydays = pd.Series(
+        pd.date_range(start= record.get('Starts', TODAY),
+                      end=record.get('ENDS', TODAY),
+                      freq=record.get('Period', 'M')) + datetime.timedelta(days=record.get('Shift', 0)))
+    if paydays.isin([CHECK_DATE]).any():
+        spending_col.insert_one({'Description': record.get('Description', np.NaN),
+          'Amount': record.get('Amount', np.NaN),
+          'Date': CHECK_DATE,
+          'Tags': record.get('Tags', np.NaN),
+          'Regular': 'YES',
+          'Source': record.get('Source', np.NaN),
+          'comments': record.get('comments', np.NaN)})
