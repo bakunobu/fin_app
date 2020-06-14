@@ -267,6 +267,7 @@ def update_reg_payments(my_col, spending_col, CHECK_DATE):
     add regular payments up to the given date to a single spending collection
     
     Args:
+    =====
     my_col: pymongo collection obj.
     a collection with regular spendings
     
@@ -277,6 +278,7 @@ def update_reg_payments(my_col, spending_col, CHECK_DATE):
     a date that all the records must be up to
     
     Returns:
+    ========
     None: None type
     Modifies the initial collection (spending_col)
     
@@ -294,3 +296,25 @@ def update_reg_payments(my_col, spending_col, CHECK_DATE):
             'Regular': 'YES',
             'Source': record.get('Source', np.NaN),
             'comments': record.get('comments', np.NaN)})
+
+            
+def auto_add_regular(my_col, spending_col):
+    '''
+    An autoupdate for collections
+    
+    Args:
+    =====
+    my_col: pymongo collection obj.
+    a collection with regular spendings
+    
+    spending_col: pymongo collection obj.
+    a collection where all the spendings are being aggregated
+    
+    Returns:
+    ========
+    None: None type
+    Modifies the initial collection (spending_col)
+    '''
+    DATE = pd.Timestamp().Today().normalize()
+    del_outdated(my_col, DATE)
+    update_reg_payments(my_col, spending_col, DATE)
