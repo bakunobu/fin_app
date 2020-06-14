@@ -262,16 +262,35 @@ def del_outdated(my_col, CHECK_DATE):
 spending_col = my_db['single_purch']
 
 # generate data sequence
-for record in my_col.find():
-    paydays = pd.Series(
-        pd.date_range(start= record.get('Starts', TODAY),
-                      end=record.get('ENDS', TODAY),
-                      freq=record.get('Period', 'M')) + datetime.timedelta(days=record.get('Shift', 0)))
-    if paydays.isin([CHECK_DATE]).any():
-        spending_col.insert_one({'Description': record.get('Description', np.NaN),
-          'Amount': record.get('Amount', np.NaN),
-          'Date': CHECK_DATE,
-          'Tags': record.get('Tags', np.NaN),
-          'Regular': 'YES',
-          'Source': record.get('Source', np.NaN),
-          'comments': record.get('comments', np.NaN)})
+def update_reg_payments(my_col, spending_col, CHECK_DATE):
+    '''
+    add regular payments up to the given date to a single spending collection
+    
+    Args:
+    my_col: pymongo collection obj.
+    a collection with regular spendings
+    
+    spending_col: pymongo collection obj.
+    a collection where all the spendings are being aggregated
+    
+    CHECK_DATE: pd.Timestamp() obj.
+    a date that all the records must be up to
+    
+    Returns:
+    None: None type
+    Modifies the initial collection (spending_col)
+    
+    '''
+    for record in my_col.find():
+        paydays = pd.Series(
+            pd.date_range(start= record.get('Starts', TODAY),
+                        end=record.get('ENDS', TODAY),
+                        freq=record.get('Period', 'M')) + datetime.timedelta(days=record.get('Shift', 0)))
+        if paydays.isin([CHECK_DATE]).any():
+            spending_col.insert_one({'Description': record.get('Description', np.NaN),
+            'Amount': record.get('Amount', np.NaN),
+            'Date': CHECK_DATE,
+            'Tags': record.get('Tags', np.NaN),
+            'Regular': 'YES',
+            'Source': record.get('Source', np.NaN),
+            'comments': record.get('comments', np.NaN)})
