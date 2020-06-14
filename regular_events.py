@@ -232,7 +232,31 @@ my_col.insert_one({'Description': 'test',
                 'Source': 'cash',
                 'comments': 'just testing'})
 
+
+
 CHECK_DATE = pd.Timestamp(2020, 1, 15).normalize()
-for record in my_col.find({'ENDS': {'$lt': CHECK_DATE}}):
-    pprint.pprint(record)
-    my_col.delete_one(record)
+
+def del_outdated(my_col, CHECK_DATE):
+    '''
+    Deletes outdated records
+    !!!pprint import required!!!
+    
+    
+    Args:
+    =====
+    my_col: PyMongo collection obj.
+    a collection to be modified
+    
+    CHECK_DATE: pd.Timestamp obj.
+    All the documents that expire BEFORE ('<', '$lt') this date will be deleted.
+    
+    
+    Returns:
+    ========
+    None: None type
+    prints all the deleted docs
+    '''
+    
+    for record in my_col.find({'ENDS': {'$lt': CHECK_DATE}}):
+        pprint.pprint(record)
+        my_col.delete_one(record)
