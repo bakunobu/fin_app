@@ -29,8 +29,15 @@ def connect_to_server():
     return(MongoClient(PATH))
 
 
-my_client = connect_to_server()
-my_db = my_client['b52fldsjjhnxmaj']
+def connect_to_db(DB):
+    '''
+    quick connect to the DB using  generate_path() and
+    connect_to_server() func
+    '''
+    my_client = connect_to_server()
+    return(my_client[DB])
+
+my_db = connect_to_db('b52fldsjjhnxmaj')
 my_col = my_db['test_app']
 
 for record in my_col.find():
