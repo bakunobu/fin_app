@@ -6,6 +6,9 @@ from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
 def generate_path():
+    '''
+    python-dotenv is requrired, grab tokens from an .env file
+    '''
     prefix = 'mongodb://'
     LOG = os.environ.get('MY_LOG')
     PAS = os.environ.get('MY_PAS')
@@ -32,13 +35,20 @@ def connect_to_server():
 def connect_to_db(DB):
     '''
     quick connect to the DB using  generate_path() and
-    connect_to_server() func
+    connect_to_server() funcs
     '''
     my_client = connect_to_server()
     return(my_client[DB])
 
-my_db = connect_to_db('b52fldsjjhnxmaj')
-my_col = my_db['test_app']
 
+def connect_to_collection(DB, COLLECTION):
+    '''
+    quick connect to the collection using generate_path() and
+    connect_to_server() and connect_to_db() funcs
+    '''
+    my_db = connect_to_db(DB)
+    return(my_db[COLLECTION])
+
+my_col = connect_to_collection('b52fldsjjhnxmaj', 'test_app')
 for record in my_col.find():
     print(record)
