@@ -18,12 +18,6 @@ def generate_path():
     return(f'{prefix}{LOG}:{PAS}@{HOST}:{PORT}/{DB}')
 
 
-# MY_URI = os.environ.get('MONGO_PATH')
-MY_URI = generate_path()
-# manual connection
-# my_client = MongoClient(MY_URI)
-
-
 def connect_to_server():
     '''
     quick connect to the remote server using  generate_path() func
@@ -49,6 +43,7 @@ def connect_to_collection(DB, COLLECTION):
     my_db = connect_to_db(DB)
     return(my_db[COLLECTION])
 
-my_col = connect_to_collection('b52fldsjjhnxmaj', 'test_app')
+# testing
+my_col = connect_to_collection(os.environ.get('MY_DB'), 'test_app')
 for record in my_col.find():
     print(record)
