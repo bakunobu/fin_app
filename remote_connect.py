@@ -18,8 +18,18 @@ def generate_path():
 # MY_URI = os.environ.get('MONGO_PATH')
 MY_URI = generate_path()
 # manual connection
-my_client = MongoClient(MY_URI)
+# my_client = MongoClient(MY_URI)
 
+
+def connect_to_server():
+    '''
+    quick connect to the remote server using  generate_path() func
+    '''
+    PATH = generate_path()
+    return(MongoClient(PATH))
+
+
+my_client = connect_to_server()
 my_db = my_client['b52fldsjjhnxmaj']
 my_col = my_db['test_app']
 
