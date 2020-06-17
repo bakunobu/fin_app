@@ -1,10 +1,13 @@
+from bson import ObjectId
 import datetime
-import pandas as pd
+from dateutil import rrule
+import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import pymongo
 from pymongo import MongoClient
-from bson import ObjectId
-import matplotlib.pyplot as plt
+from recurrent import RecurringEvent
+
 
 
 TODAY = pd.Timestamp(2020, 6, 11)
@@ -56,3 +59,19 @@ def plot_budget(df):
     plt.plot(df.index, df.cum_total, label='Cumulative Total')
     plt.legend()
     plt.show()
+    
+
+def get_dates(frequency):
+    try:
+        return(pd.Timestamp(frequency).normalize())
+    except ValueError:
+        pass
+    
+    try:
+        r = RecurringEvent()
+        r.parse(frequency)
+        rr = rrule.rrulestr(r.get_RFC_rrule())
+        return([pd.to_datetime(date).normalize()
+                for date in rr.between(TODAY, END)])
+    except ValueError as e:
+        raise ValueError('Invalid Frequency')
