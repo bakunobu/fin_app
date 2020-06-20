@@ -75,3 +75,16 @@ def get_dates(frequency):
                 for date in rr.between(TODAY, END)])
     except ValueError as e:
         raise ValueError('Invalid Frequency')
+    
+
+def add_saving(saving, date=pd.Timestamp().today().normalize(), df):
+    '''
+    '''
+    spending = -saving
+    DATE = date
+    data = {'Saving': saving,
+            'Spending': spending,
+            'Balance': df['Saving'].sum(axis=0) + saving,
+            'Date': date}
+    df.append(data)
+    return(df)
